@@ -23,8 +23,21 @@ orbitControls.enableDamping = true
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
 const cubeMaterial = new THREE.MeshBasicMaterial({color: "red", wireframe: true})
+// const triangleMaterial = new THREE.MeshBasicMaterial({color: "red"})
 
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial)
+
+// const vertices = new Float32Array([
+//   0,0,0,
+//   0,2,0,
+//   2,0,0
+// ])
+// const bufferAttribute = new THREE.BufferAttribute(vertices, 3)
+// const geometry = new THREE.BufferGeometry()
+// geometry.setAttribute('position', bufferAttribute)
+
+// const triangleMesh = new THREE.Mesh(geometry, triangleMaterial)
+
 // cubeMesh.position.x = 2
 // const cubeMesh2 = new THREE.Mesh(cubeGeometry, cubeMaterial)
 // const cubeMesh3 = new THREE.Mesh(cubeGeometry, cubeMaterial)
@@ -39,6 +52,7 @@ const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial)
 scene.add(new THREE.AxesHelper(6))
 // scene.add(group)
 scene.add(cubeMesh)
+// scene.add(triangleMesh)
 
 // cubeMesh.rotation.y = Math.PI * 0.25
 // cubeMesh.rotation.y = THREE.MathUtils.degToRad(45)
