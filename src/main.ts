@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-import type { Moon, Planet } from './types';
+import type { Asteroid, Moon, Planet } from './types';
 
 
 // ============================================
@@ -100,11 +100,6 @@ const textureLoader = new THREE.TextureLoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 
 
-// Vite public directory:
-// static/textures/
-//
-// URL becomes:
-// BASE_URL + textures/filename
 
 const assetUrl = (path: string): string => {
   return `${import.meta.env.BASE_URL}${path}`;
@@ -144,6 +139,16 @@ const earthTexture = loadTexture('static/textures/2k_earth_daymap.jpg');
 const moonTexture = loadTexture('static/textures/2k_moon.jpg');
 
 const marsTexture = loadTexture('static/textures/2k_mars.jpg');
+
+const jupiterTexture = loadTexture('textures/2k_jupiter.jpg');
+
+const saturnTexture = loadTexture('textures/2k_saturn.jpg');
+
+const uranusTexture = loadTexture('textures/2k_uranus.jpg');
+
+const neptuneTexture = loadTexture('textures/2k_neptune.jpg');
+
+const plutoTexture = loadTexture('textures/2k_pluto.jpg');
 
 
 // ============================================
@@ -203,6 +208,25 @@ const marsMaterial = new THREE.MeshStandardMaterial({
   map: marsTexture
 });
 
+const jupiterMaterial = new THREE.MeshStandardMaterial({
+  map: jupiterTexture
+});
+
+const saturnMaterial = new THREE.MeshStandardMaterial({
+  map: saturnTexture
+});
+
+const uranusMaterial = new THREE.MeshStandardMaterial({
+  map: uranusTexture
+});
+
+const neptuneMaterial = new THREE.MeshStandardMaterial({
+  map: neptuneTexture
+});
+
+const plutoMaterial = new THREE.MeshStandardMaterial({
+  map: plutoTexture
+});
 
 // ============================================
 // SOLAR SYSTEM DATA
@@ -305,6 +329,239 @@ const planets: Planet[] = [
 
         orbitalPeriodDays: 1.26244,
 
+        material: moonMaterial
+      }
+    ]
+  },
+
+  //JUPITAR
+  {
+  name: "Jupiter",
+   radius: 4.0,
+   distance: 76,
+
+   orbitalPeriodDays: 4332.589,
+   rotationPeriodDays: 0.4135417,
+
+    axialTiltDeg: 3.13,
+    eccentricity: 0.0487,
+
+    material: jupiterMaterial,
+
+    moons: [
+      {
+        name: "Io",
+        radius: 0.12,
+        distance: 4.8,
+        orbitalPeriodDays: 1.762732,
+        material: moonMaterial
+      },
+      {
+        name: "Europa",
+        radius: 0.10,
+        distance: 6.0,
+        orbitalPeriodDays: 3.525463,
+        material: moonMaterial
+      },
+      {
+        name: "Ganymede",
+        radius: 0.16,
+        distance: 7.5,
+        orbitalPeriodDays: 7.155588,
+        material: moonMaterial
+      },
+      {
+        name: "Callisto",
+        radius: 0.15,
+        distance: 9.5,
+        orbitalPeriodDays: 16.690440,
+        material: moonMaterial
+      }
+    ]
+  },
+
+  // SATURN
+
+  {
+    name: "Saturn",
+    radius: 3.5,
+    distance: 100,
+
+    orbitalPeriodDays: 10755.699,
+    rotationPeriodDays: 0.444,
+
+    axialTiltDeg: 26.73,
+    eccentricity: 0.0520,
+
+    material: saturnMaterial,
+
+    moons: [
+      {
+        name: "Mimas",
+        radius: 0.07,
+        distance: 3.9,
+        orbitalPeriodDays: 0.942422,
+        material: moonMaterial
+      },
+      {
+        name: "Enceladus",
+        radius: 0.08,
+        distance: 4.5,
+        orbitalPeriodDays: 1.370218,
+        material: moonMaterial
+      },
+      {
+        name: "Tethys",
+        radius: 0.09,
+        distance: 5.2,
+        orbitalPeriodDays: 1.887802,
+        material: moonMaterial
+      },
+      {
+        name: "Dione",
+        radius: 0.10,
+        distance: 6.0,
+        orbitalPeriodDays: 2.736916,
+        material: moonMaterial
+      },
+      {
+        name: "Rhea",
+        radius: 0.12,
+        distance: 7.2,
+        orbitalPeriodDays: 4.517503,
+        material: moonMaterial
+      },
+      {
+        name: "Titan",
+        radius: 0.25,
+        distance: 9.5,
+        orbitalPeriodDays: 15.945448,
+        material: moonMaterial
+      },
+      {
+        name: "Iapetus",
+        radius: 0.12,
+        distance: 13,
+        orbitalPeriodDays: 79.331002,
+        material: moonMaterial
+      }
+    ]
+  },
+
+  // URANUS
+
+  {
+    name: "Uranus",
+    radius: 2.0,
+    distance: 130,
+
+    orbitalPeriodDays: 30685.400,
+    rotationPeriodDays: 0.718333,
+
+    axialTiltDeg: 97.77,
+    eccentricity: 0.0469,
+
+    material: uranusMaterial,
+
+    moons: [
+      {
+        name: "Miranda",
+        radius: 0.06,
+        distance: 2.8,
+        orbitalPeriodDays: 1.413479,
+        material: moonMaterial
+      },
+      {
+        name: "Ariel",
+        radius: 0.10,
+        distance: 3.6,
+        orbitalPeriodDays: 2.520379,
+        material: moonMaterial
+      },
+      {
+        name: "Umbriel",
+        radius: 0.09,
+        distance: 4.4,
+        orbitalPeriodDays: 4.144177,
+        material: moonMaterial
+      },
+      {
+        name: "Titania",
+        radius: 0.15,
+        distance: 5.5,
+        orbitalPeriodDays: 8.705869,
+        material: moonMaterial
+      },
+      {
+        name: "Oberon",
+        radius: 0.15,
+        distance: 6.8,
+        orbitalPeriodDays: 13.463237,
+        material: moonMaterial
+      }
+    ]
+  },
+
+  // NEPTUNE
+  {
+    name: "Neptune",
+    radius: 1.9,
+    distance: 160,
+
+    orbitalPeriodDays: 60189.018,
+    rotationPeriodDays: 0.67125,
+
+    axialTiltDeg: 28.32,
+    eccentricity: 0.0097,
+
+    material: neptuneMaterial,
+
+    moons: [
+      {
+        name: "Triton",
+        radius: 0.18,
+        distance: 4.5,
+        orbitalPeriodDays: 5.8792,
+        material: moonMaterial
+      }
+    ]
+  },
+
+  // PLUTO (DWARF PLANET)
+
+  {
+    name: "Pluto",
+    radius: 0.4,
+    distance: 210,
+
+    orbitalPeriodDays: 90560,
+    rotationPeriodDays: 6.3872,
+
+    axialTiltDeg: 119.51,
+    eccentricity: 0.2444,
+
+    material: plutoMaterial,
+
+    moons: [
+      {
+        name: "Charon",
+        radius: 0.18,
+        distance: 1.2,
+        orbitalPeriodDays: 6.387222,
+        material: moonMaterial
+      },
+      {
+        name: "Nix",
+        radius: 0.045,
+        distance: 2.0,
+        orbitalPeriodDays: 24.85,
+        material: moonMaterial
+      },
+      {
+        name: "Hydra",
+        radius: 0.05,
+        distance: 2.6,
+        orbitalPeriodDays: 38.20,
         material: moonMaterial
       }
     ]
@@ -481,6 +738,98 @@ const planetObjects = planets.map((planet) => {
 
 
 // ============================================
+// ASTEROID BELT
+// ============================================
+
+const ASTEROID_COUNT = 2500;
+
+const INNER_RADIUS = 42;
+const OUTER_RADIUS = 66;
+
+// Shared geometry and material
+const asteroidGeometry = new THREE.DodecahedronGeometry(1, 0);
+
+const asteroidMaterial = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  roughness: 1
+});
+
+// Instanced mesh
+const asteroidBelt = new THREE.InstancedMesh(
+  asteroidGeometry,
+  asteroidMaterial,
+  ASTEROID_COUNT
+);
+
+asteroidBelt.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+
+// Prevent incorrect frustum culling as asteroids move
+asteroidBelt.frustumCulled = false;
+
+scene.add(asteroidBelt);
+
+// ============================================
+// ASTEROID DATA
+// ============================================
+
+const asteroids: Asteroid[] = [];
+
+for (let i = 0; i < ASTEROID_COUNT; i++) {
+
+  // Distribute asteroids across the belt
+  const orbitRadius = Math.sqrt(
+    Math.random() *
+    (OUTER_RADIUS ** 2 - INNER_RADIUS ** 2) +
+    INNER_RADIUS ** 2
+  );
+
+  // Approximate orbital period using Kepler's third law.
+  // Earth is at visual distance 20 and has a period of 365.256 days.
+  const orbitalPeriodDays =
+    365.256 * Math.pow(orbitRadius / 20, 1.5);
+
+  // Random asteroid size
+  const size = 0.035 + Math.random() * 0.09;
+
+  // Slight orbital inclination
+  const inclination =
+    (Math.random() - 0.5) * 0.08;
+
+  // Random starting position
+  const angle = Math.random() * Math.PI * 2;
+
+  // Random asteroid color
+  const color = new THREE.Color().setHSL(
+    0.08,
+    0.06,
+    0.3 + Math.random() * 0.2
+  );
+
+  asteroidBelt.setColorAt(i, color);
+
+  asteroids.push({
+    orbitRadius,
+    orbitalPeriodDays,
+    angle,
+    size,
+    inclination,
+
+    rotation: new THREE.Euler(
+      Math.random() * Math.PI,
+      Math.random() * Math.PI,
+      Math.random() * Math.PI
+    ),
+
+    rotationSpeed: new THREE.Vector3(
+      Math.random() * 0.5,
+      Math.random() * 0.5,
+      Math.random() * 0.5
+    )
+  });
+
+}
+
+// ============================================
 // LIGHTS
 // ============================================
 
@@ -544,6 +893,70 @@ let simulationDaysPerSecond = 1;
 
 const TWO_PI = Math.PI * 2;
 
+// ============================================
+// ASTEROID ANIMATION
+// ============================================
+
+const dummy = new THREE.Object3D();
+
+function updateAsteroidBelt(simulatedDays: number) {
+
+  asteroids.forEach((asteroid, index) => {
+
+    // Individual orbital movement
+    asteroid.angle +=
+      (Math.PI * 2 * simulatedDays) /
+      asteroid.orbitalPeriodDays;
+
+    asteroid.angle %= Math.PI * 2;
+
+    const angle = asteroid.angle;
+    const radius = asteroid.orbitRadius;
+    const inclination = asteroid.inclination;
+
+    // Position in slightly inclined orbital plane
+    const x = Math.cos(angle) * radius;
+
+    const y =
+      Math.sin(angle) *
+      radius *
+      Math.sin(inclination);
+
+    const z =
+      Math.sin(angle) *
+      radius *
+      Math.cos(inclination);
+
+    dummy.position.set(x, y, z);
+
+    // Individual axial rotation
+    asteroid.rotation.x +=
+      simulatedDays * asteroid.rotationSpeed.x;
+
+    asteroid.rotation.y +=
+      simulatedDays * asteroid.rotationSpeed.y;
+
+    asteroid.rotation.z +=
+      simulatedDays * asteroid.rotationSpeed.z;
+
+    dummy.rotation.copy(asteroid.rotation);
+
+    // Different size for each asteroid
+    dummy.scale.set(
+      asteroid.size * (0.8 + Math.random() * 0.4),
+      asteroid.size,
+      asteroid.size * (0.8 + Math.random() * 0.4)
+    );
+
+    dummy.updateMatrix();
+
+    asteroidBelt.setMatrixAt(index, dummy.matrix);
+
+  });
+
+  asteroidBelt.instanceMatrix.needsUpdate = true;
+
+}
 
 // ============================================
 // TIMER
@@ -636,6 +1049,7 @@ function renderloop() {
   // Convert real seconds to simulated Earth days
   const simulatedDays = delta * simulationDaysPerSecond;
 
+  updateAsteroidBelt(simulatedDays);
 
   // ==========================================
   // PLANET ANIMATION

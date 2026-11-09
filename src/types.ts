@@ -1,5 +1,6 @@
 
 import type { Material } from 'three';
+import * as THREE from 'three';
 
 export interface Moon {
   name: string;
@@ -24,4 +25,16 @@ export interface Planet {
 
   material: Material;
   moons: Moon[];
+}
+
+export interface Asteroid {
+  orbitRadius: number;
+  orbitalPeriodDays: number;
+  angle: number;
+
+  size: number;
+  inclination: number;
+
+  rotation: THREE.Euler;
+  rotationSpeed: THREE.Vector3;
 }
