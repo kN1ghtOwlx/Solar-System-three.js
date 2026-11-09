@@ -23,7 +23,7 @@ window.addEventListener('resize', () => {
 
 const orbitControls = new OrbitControls(camera, canvas)
 orbitControls.enableDamping = true
-orbitControls.autoRotate = true
+// orbitControls.autoRotate = true
 // orbitControls.enablePan = false
 
 //---------------GEOMETRY------------------
@@ -71,6 +71,7 @@ const planets: Planet[] = [
     radius: 0.5,
     distance: 10,
     speed: 0.01,
+    rotationSpeed: 0.006,
     material: mercuryMaterial,
     moons: []
   },
@@ -79,6 +80,7 @@ const planets: Planet[] = [
     radius: 1.21,
     distance: 15,
     speed: 0.007,
+    rotationSpeed: 0.002,
     material: venusMaterial,
     moons: []
   },
@@ -87,6 +89,7 @@ const planets: Planet[] = [
     radius: 1.32,
     distance: 20,
     speed: 0.006,
+    rotationSpeed: 0.02,
     material: earthMaterial,
     moons: [
       {
@@ -94,7 +97,7 @@ const planets: Planet[] = [
         radius: 0.36,
         distance: 2,
         speed: 0.02,
-        // material: moonMaterial
+        material: moonMaterial
       }
     ]
   },
@@ -103,6 +106,7 @@ const planets: Planet[] = [
     radius: 0.7,
     distance: 26,
     speed: 0.005,
+    rotationSpeed: 0.018,
     material: marsMaterial,
     moons: [
       {
@@ -110,18 +114,18 @@ const planets: Planet[] = [
         radius: 0.12,
         distance: 1.2,
         speed: 0.025,
-        // material: phobosMaterial
+        material: moonMaterial
       },
       {
         name: "Deimos",
         radius: 0.09,
         distance: 1.8,
         speed: 0.015,
-        // material: deimosMaterial
+        material: moonMaterial
       }
     ]
   }
-]
+];
 
 
 const sun = new THREE.Mesh(sphereGeometry, sunMaterial)
@@ -130,33 +134,66 @@ sun.scale.setScalar(5)
 scene.add(sun)
 
 const createPlanet = (planet: Planet) => {
-  const planetMesh = new THREE.Mesh(sphereGeometry, planet.material)
-  planetMesh.scale.setScalar(planet.radius)
+  const planetMesh = new THREE.Mesh(
+    sphereGeometry,
+    planet.material
+  )
 
-  planetMesh.position.x = planet.distance
-  return planetMesh
+  planetMesh.scale.setScalar(planet.radius);
+  planetMesh.position.x = planet.distance;
+
+  return planetMesh;
 }
 
 const createMoon = (moon: Moon) => {
-  const moonMesh = new THREE.Mesh(sphereGeometry, moonMaterial)
-  moonMesh.scale.setScalar(moon.radius)
+  const moonMesh = new THREE.Mesh(
+    sphereGeometry,
+    moon.material
+  )
 
-  moonMesh.position.x = moon.distance
-  return moonMesh
+  moonMesh.scale.setScalar(moon.radius);
+  moonMesh.position.x = moon.distance;
+
+  return moonMesh;
 }
 
-const planetMeshes = planets.map((planet) => {
-  const planetMesh = createPlanet(planet)
-  scene.add(planetMesh)
+const planetObjects = planets.map((planet) => {
 
-  planet.moons.forEach((moon: Moon) => {
-    const moonMesh = createMoon(moon)
-    planetMesh.add(moonMesh)
+  // Planet orbital pivot
+  const orbitPivot = new THREE.Group();
+  scene.add(orbitPivot);
+
+  // Planet mesh
+  const planetMesh = createPlanet(planet);
+  orbitPivot.add(planetMesh);
+
+  // Moon orbital pivots
+  const moons = planet.moons.map((moon) => {
+
+    const moonOrbitPivot = new THREE.Group();
+
+    // Place moon orbit around its planet
+    moonOrbitPivot.position.x = planet.distance;
+
+    orbitPivot.add(moonOrbitPivot);
+
+    const moonMesh = createMoon(moon);
+    moonOrbitPivot.add(moonMesh);
+
+    return {
+      orbitPivot: moonOrbitPivot,
+      speed: moon.speed
+    }
   })
 
-  return planetMesh
+  return {
+    orbitPivot,
+    planetMesh,
+    moons,
+    orbitAngle: 0,
+    spinAngle: 0
+  }
 })
-
 //------------------------LIGHTS-------------------
 const ambieantLight = new THREE.AmbientLight(0xffffff, 0.02)
 scene.add(ambieantLight)
@@ -169,28 +206,46 @@ scene.add(pointLight)
 const timer = new THREE.Timer()
 let delta = 0
 let elaspedTime = 0
+const timeScale = 100;
 
-// ------------RENDER LOOP------------
-function renderloop(){
-  
-  delta = timer.update().getDelta()
-  elaspedTime = timer.getElapsed()
-  
-  //--------------ANIMATAION-------------
-  planetMeshes.forEach((planet, planetIndex) => {
-    planet.rotation.y += delta * planets[planetIndex].speed * 100
-    planet.position.x = Math.sin(planet.rotation.y) * planets[planetIndex].distance
-    planet.position.z = Math.cos(planet.rotation.y) * planets[planetIndex].distance
+// ------------RENDER LOOP-----------
 
-    planet.children.forEach((moon, moonIndex) => {
-      moon.rotation.y += delta * planets[planetIndex].moons[moonIndex].speed * 100
-      moon.position.x = Math.sin(moon.rotation.y) * planets[planetIndex].moons[moonIndex].distance
-      moon.position.z = Math.cos(moon.rotation.y) * planets[planetIndex].moons[moonIndex].distance
-    })
-  })
-  
-  renderer.render(scene, camera)
-  requestAnimationFrame(renderloop)
+function renderloop() {
+
+  delta = timer.update().getDelta();
+  elaspedTime = timer.getElapsed();
+
+  // Planet animation
+  planetObjects.forEach((obj, index) => {
+
+    const planet = planets[index];
+
+    // 1. Revolution around Sun
+    obj.orbitAngle += delta * planet.speed * timeScale;
+
+    obj.orbitPivot.rotation.y = obj.orbitAngle;
+
+    // 2. Independent rotation on its own axis
+    obj.spinAngle += delta * planet.rotationSpeed * timeScale;
+
+    // Compensate for the parent orbital rotation
+    obj.planetMesh.rotation.y = obj.spinAngle - obj.orbitAngle;
+
+    // 3. Moon revolution around its planet
+    obj.moons.forEach((moon) => {
+
+      moon.orbitPivot.rotation.y +=
+        delta * moon.speed * timeScale;
+
+    });
+
+  });
+
+  orbitControls.update();
+
+  renderer.render(scene, camera);
+
+  requestAnimationFrame(renderloop);
 }
 
-renderloop()
+renderloop();

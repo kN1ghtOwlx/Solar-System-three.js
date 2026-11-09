@@ -1,11 +1,11 @@
-import type { Material } from "three";
+import type * as THREE from 'three';
 
 export interface Moon {
   name: string;
   radius: number;
   distance: number;
   speed: number;
-//   material: Material;
+  material: THREE.Material;
 }
 
 export interface Planet {
@@ -13,6 +13,7 @@ export interface Planet {
   radius: number;
   distance: number;
   speed: number;
-  material: Material;
+  rotationSpeed: number;
+  material: THREE.Material;
   moons: Moon[];
 }
