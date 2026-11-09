@@ -128,27 +128,27 @@ const loadTexture = (path: string): THREE.Texture => {
 // PLANET TEXTURES
 // ============================================
 
-const sunTexture = loadTexture('static/textures/2k_sun.jpg');
+const sunTexture = loadTexture('textures/2k_sun.jpg');
 
-const mercuryTexture = loadTexture('static/textures/2k_mercury.jpg');
+const mercuryTexture = loadTexture('textures/2k_mercury.jpg');
 
-const venusTexture = loadTexture('static/textures/2k_venus_surface.jpg');
+const venusTexture = loadTexture('textures/2k_venus_surface.jpg');
 
-const earthTexture = loadTexture('static/textures/2k_earth_daymap.jpg');
+const earthTexture = loadTexture('textures/2k_earth_daymap.jpg');
 
-const moonTexture = loadTexture('static/textures/2k_moon.jpg');
+const moonTexture = loadTexture('textures/2k_moon.jpg');
 
-const marsTexture = loadTexture('static/textures/2k_mars.jpg');
+const marsTexture = loadTexture('textures/2k_mars.jpg');
 
-const jupiterTexture = loadTexture('static/textures/2k_jupiter.jpg');
+const jupiterTexture = loadTexture('textures/2k_jupiter.jpg');
 
-const saturnTexture = loadTexture('static/textures/2k_saturn.jpg');
+const saturnTexture = loadTexture('textures/2k_saturn.jpg');
 
-const uranusTexture = loadTexture('static/textures/2k_uranus.jpg');
+const uranusTexture = loadTexture('textures/2k_uranus.jpg');
 
-const neptuneTexture = loadTexture('static/textures/2k_neptune.jpg');
+const neptuneTexture = loadTexture('textures/2k_neptune.jpg');
 
-const plutoTexture = loadTexture('static/textures/2k_pluto.jpg');
+const plutoTexture = loadTexture('textures/2k_pluto.jpg');
 
 
 // ============================================

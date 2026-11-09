@@ -439,47 +439,47 @@ export const createPlanets = (
     // PLUTO (DWARF PLANET)
     // ============================================
 
-    {
-      name: 'Pluto',
-      radius: 0.4,
-      distance: 210,
+    // {
+    //   name: 'Pluto',
+    //   radius: 0.4,
+    //   distance: 210,
 
-      orbitalPeriodDays: 90560,
-      rotationPeriodDays: 6.3872,
+    //   orbitalPeriodDays: 90560,
+    //   rotationPeriodDays: 6.3872,
 
-      axialTiltDeg: 119.51,
-      eccentricity: 0.2444,
-      orbitalInclinationDeg: 17.16,
+    //   axialTiltDeg: 119.51,
+    //   eccentricity: 0.2444,
+    //   orbitalInclinationDeg: 17.16,
 
-      // Simplified initial phase for visual demonstration
-      initialMeanAnomalyDeg: 60,
+    //   // Simplified initial phase for visual demonstration
+    //   initialMeanAnomalyDeg: 60,
 
-      material: materials.plutoMaterial,
+    //   material: materials.plutoMaterial,
 
-      moons: [
-        {
-          name: 'Charon',
-          radius: 0.18,
-          distance: 1.2,
-          orbitalPeriodDays: 6.387222,
-          material: materials.moonMaterial
-        },
-        {
-          name: 'Nix',
-          radius: 0.045,
-          distance: 2.0,
-          orbitalPeriodDays: 24.85,
-          material: materials.moonMaterial
-        },
-        {
-          name: 'Hydra',
-          radius: 0.05,
-          distance: 2.6,
-          orbitalPeriodDays: 38.20,
-          material: materials.moonMaterial
-        }
-      ]
-    }
+    //   moons: [
+    //     {
+    //       name: 'Charon',
+    //       radius: 0.18,
+    //       distance: 1.2,
+    //       orbitalPeriodDays: 6.387222,
+    //       material: materials.moonMaterial
+    //     },
+    //     {
+    //       name: 'Nix',
+    //       radius: 0.045,
+    //       distance: 2.0,
+    //       orbitalPeriodDays: 24.85,
+    //       material: materials.moonMaterial
+    //     },
+    //     {
+    //       name: 'Hydra',
+    //       radius: 0.05,
+    //       distance: 2.6,
+    //       orbitalPeriodDays: 38.20,
+    //       material: materials.moonMaterial
+    //     }
+    //   ]
+    // }
 
   ];
 };
