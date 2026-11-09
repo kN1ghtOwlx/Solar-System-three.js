@@ -1,8 +1,8 @@
-
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import type { Asteroid, Moon, Planet } from './types';
+import { createPlanets } from './planets';
 
 
 // ============================================
@@ -140,15 +140,15 @@ const moonTexture = loadTexture('static/textures/2k_moon.jpg');
 
 const marsTexture = loadTexture('static/textures/2k_mars.jpg');
 
-const jupiterTexture = loadTexture('textures/2k_jupiter.jpg');
+const jupiterTexture = loadTexture('static/textures/2k_jupiter.jpg');
 
-const saturnTexture = loadTexture('textures/2k_saturn.jpg');
+const saturnTexture = loadTexture('static/textures/2k_saturn.jpg');
 
-const uranusTexture = loadTexture('textures/2k_uranus.jpg');
+const uranusTexture = loadTexture('static/textures/2k_uranus.jpg');
 
-const neptuneTexture = loadTexture('textures/2k_neptune.jpg');
+const neptuneTexture = loadTexture('static/textures/2k_neptune.jpg');
 
-const plutoTexture = loadTexture('textures/2k_pluto.jpg');
+const plutoTexture = loadTexture('static/textures/2k_pluto.jpg');
 
 
 // ============================================
@@ -232,343 +232,19 @@ const plutoMaterial = new THREE.MeshStandardMaterial({
 // SOLAR SYSTEM DATA
 // ============================================
 
-const planets: Planet[] = [
+const planets: Planet[] = createPlanets({
+  mercuryMaterial,
+  venusMaterial,
+  earthMaterial,
+  moonMaterial,
+  marsMaterial,
 
-  // MERCURY
-  {
-    name: 'Mercury',
-    radius: 0.5,
-    distance: 10,
-
-    orbitalPeriodDays: 87.969,
-    rotationPeriodDays: 58.6462,
-
-    axialTiltDeg: 0.034,
-    eccentricity: 0.2056,
-
-    material: mercuryMaterial,
-
-    moons: []
-  },
-
-
-  // VENUS
-  {
-    name: 'Venus',
-    radius: 1.21,
-    distance: 15,
-
-    orbitalPeriodDays: 224.701,
-    rotationPeriodDays: 243.018,
-
-    axialTiltDeg: 177.4,
-    eccentricity: 0.0068,
-
-    material: venusMaterial,
-
-    moons: []
-  },
-
-
-  // EARTH
-  {
-    name: 'Earth',
-    radius: 1.32,
-    distance: 20,
-
-    orbitalPeriodDays: 365.256,
-    rotationPeriodDays: 0.99726968,
-
-    axialTiltDeg: 23.44,
-    eccentricity: 0.0167,
-
-    material: earthMaterial,
-
-    moons: [
-      {
-        name: 'Moon',
-        radius: 0.36,
-        distance: 2,
-
-        orbitalPeriodDays: 27.3217,
-
-        material: moonMaterial
-      }
-    ]
-  },
-
-
-  // MARS
-  {
-    name: 'Mars',
-    radius: 0.7,
-    distance: 26,
-
-    orbitalPeriodDays: 686.980,
-    rotationPeriodDays: 1.025956,
-
-    axialTiltDeg: 25.19,
-    eccentricity: 0.0934,
-
-    material: marsMaterial,
-
-    moons: [
-      {
-        name: 'Phobos',
-        radius: 0.12,
-        distance: 1.2,
-
-        orbitalPeriodDays: 0.31891,
-
-        material: moonMaterial
-      },
-      {
-        name: 'Deimos',
-        radius: 0.09,
-        distance: 1.8,
-
-        orbitalPeriodDays: 1.26244,
-
-        material: moonMaterial
-      }
-    ]
-  },
-
-  //JUPITAR
-  {
-  name: "Jupiter",
-   radius: 4.0,
-   distance: 76,
-
-   orbitalPeriodDays: 4332.589,
-   rotationPeriodDays: 0.4135417,
-
-    axialTiltDeg: 3.13,
-    eccentricity: 0.0487,
-
-    material: jupiterMaterial,
-
-    moons: [
-      {
-        name: "Io",
-        radius: 0.12,
-        distance: 4.8,
-        orbitalPeriodDays: 1.762732,
-        material: moonMaterial
-      },
-      {
-        name: "Europa",
-        radius: 0.10,
-        distance: 6.0,
-        orbitalPeriodDays: 3.525463,
-        material: moonMaterial
-      },
-      {
-        name: "Ganymede",
-        radius: 0.16,
-        distance: 7.5,
-        orbitalPeriodDays: 7.155588,
-        material: moonMaterial
-      },
-      {
-        name: "Callisto",
-        radius: 0.15,
-        distance: 9.5,
-        orbitalPeriodDays: 16.690440,
-        material: moonMaterial
-      }
-    ]
-  },
-
-  // SATURN
-
-  {
-    name: "Saturn",
-    radius: 3.5,
-    distance: 100,
-
-    orbitalPeriodDays: 10755.699,
-    rotationPeriodDays: 0.444,
-
-    axialTiltDeg: 26.73,
-    eccentricity: 0.0520,
-
-    material: saturnMaterial,
-
-    moons: [
-      {
-        name: "Mimas",
-        radius: 0.07,
-        distance: 3.9,
-        orbitalPeriodDays: 0.942422,
-        material: moonMaterial
-      },
-      {
-        name: "Enceladus",
-        radius: 0.08,
-        distance: 4.5,
-        orbitalPeriodDays: 1.370218,
-        material: moonMaterial
-      },
-      {
-        name: "Tethys",
-        radius: 0.09,
-        distance: 5.2,
-        orbitalPeriodDays: 1.887802,
-        material: moonMaterial
-      },
-      {
-        name: "Dione",
-        radius: 0.10,
-        distance: 6.0,
-        orbitalPeriodDays: 2.736916,
-        material: moonMaterial
-      },
-      {
-        name: "Rhea",
-        radius: 0.12,
-        distance: 7.2,
-        orbitalPeriodDays: 4.517503,
-        material: moonMaterial
-      },
-      {
-        name: "Titan",
-        radius: 0.25,
-        distance: 9.5,
-        orbitalPeriodDays: 15.945448,
-        material: moonMaterial
-      },
-      {
-        name: "Iapetus",
-        radius: 0.12,
-        distance: 13,
-        orbitalPeriodDays: 79.331002,
-        material: moonMaterial
-      }
-    ]
-  },
-
-  // URANUS
-
-  {
-    name: "Uranus",
-    radius: 2.0,
-    distance: 130,
-
-    orbitalPeriodDays: 30685.400,
-    rotationPeriodDays: 0.718333,
-
-    axialTiltDeg: 97.77,
-    eccentricity: 0.0469,
-
-    material: uranusMaterial,
-
-    moons: [
-      {
-        name: "Miranda",
-        radius: 0.06,
-        distance: 2.8,
-        orbitalPeriodDays: 1.413479,
-        material: moonMaterial
-      },
-      {
-        name: "Ariel",
-        radius: 0.10,
-        distance: 3.6,
-        orbitalPeriodDays: 2.520379,
-        material: moonMaterial
-      },
-      {
-        name: "Umbriel",
-        radius: 0.09,
-        distance: 4.4,
-        orbitalPeriodDays: 4.144177,
-        material: moonMaterial
-      },
-      {
-        name: "Titania",
-        radius: 0.15,
-        distance: 5.5,
-        orbitalPeriodDays: 8.705869,
-        material: moonMaterial
-      },
-      {
-        name: "Oberon",
-        radius: 0.15,
-        distance: 6.8,
-        orbitalPeriodDays: 13.463237,
-        material: moonMaterial
-      }
-    ]
-  },
-
-  // NEPTUNE
-  {
-    name: "Neptune",
-    radius: 1.9,
-    distance: 160,
-
-    orbitalPeriodDays: 60189.018,
-    rotationPeriodDays: 0.67125,
-
-    axialTiltDeg: 28.32,
-    eccentricity: 0.0097,
-
-    material: neptuneMaterial,
-
-    moons: [
-      {
-        name: "Triton",
-        radius: 0.18,
-        distance: 4.5,
-        orbitalPeriodDays: 5.8792,
-        material: moonMaterial
-      }
-    ]
-  },
-
-  // PLUTO (DWARF PLANET)
-
-  {
-    name: "Pluto",
-    radius: 0.4,
-    distance: 210,
-
-    orbitalPeriodDays: 90560,
-    rotationPeriodDays: 6.3872,
-
-    axialTiltDeg: 119.51,
-    eccentricity: 0.2444,
-
-    material: plutoMaterial,
-
-    moons: [
-      {
-        name: "Charon",
-        radius: 0.18,
-        distance: 1.2,
-        orbitalPeriodDays: 6.387222,
-        material: moonMaterial
-      },
-      {
-        name: "Nix",
-        radius: 0.045,
-        distance: 2.0,
-        orbitalPeriodDays: 24.85,
-        material: moonMaterial
-      },
-      {
-        name: "Hydra",
-        radius: 0.05,
-        distance: 2.6,
-        orbitalPeriodDays: 38.20,
-        material: moonMaterial
-      }
-    ]
-  }
-
-];
-
+  jupiterMaterial,
+  saturnMaterial,
+  uranusMaterial,
+  neptuneMaterial,
+  plutoMaterial
+});
 
 // ============================================
 // SUN
@@ -619,6 +295,55 @@ const createMoon = (moon: Moon): THREE.Mesh => {
 
   return moonMesh;
 };
+
+
+const createPlanetRings = (planet: Planet): THREE.Group => {
+
+  const ringGroup = new THREE.Group();
+
+  // Not every planet has rings
+  if (!planet.rings || planet.rings.length === 0) {
+    return ringGroup;
+  }
+
+  planet.rings.forEach((ring) => {
+
+    // Ring radii relative to planet size
+    const innerRadius = planet.radius * ring.innerRadius;
+    const outerRadius = planet.radius * ring.outerRadius;
+
+    const geometry = new THREE.RingGeometry(
+      innerRadius,
+      outerRadius,
+      128
+    );
+
+    // Rotate ring from XY plane to XZ plane.
+    // Its normal will now align with the planet's local Y axis.
+    geometry.rotateX(-Math.PI / 2);
+
+    const material = new THREE.MeshStandardMaterial({
+      color: ring.color,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: ring.opacity,
+      roughness: 1,
+      metalness: 0,
+      depthWrite: false
+    });
+
+    const ringMesh = new THREE.Mesh(
+      geometry,
+      material
+    );
+
+    ringGroup.add(ringMesh);
+
+  });
+
+  return ringGroup;
+};
+
 
 
 // ============================================
@@ -695,8 +420,11 @@ const planetObjects = planets.map((planet) => {
 
   // Planet mesh
   const planetMesh = createPlanet(planet);
-
   axisGroup.add(planetMesh);
+
+  // Planet rings
+  const ringGroup = createPlanetRings(planet);
+  axisGroup.add(ringGroup);
 
 
   // Create moons
@@ -835,7 +563,7 @@ for (let i = 0; i < ASTEROID_COUNT; i++) {
 
 const ambientLight = new THREE.AmbientLight(
   0xffffff,
-  0.12
+  0.1
 );
 
 scene.add(ambientLight);

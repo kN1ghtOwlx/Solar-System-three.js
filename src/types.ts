@@ -10,21 +10,47 @@ export interface Moon {
   material: Material;
 }
 
+export interface PlanetaryRing {
+  innerRadius: number;
+  outerRadius: number;
+  color: number;
+  opacity: number;
+}
+
 export interface Planet {
   name: string;
   radius: number;
   distance: number;
 
-  // Orbital and rotation periods in Earth days
+  // Orbital and rotational periods in Earth days
   orbitalPeriodDays: number;
   rotationPeriodDays: number;
 
-  // Planetary axis and orbital shape
+  // Orientation and orbital shape
   axialTiltDeg: number;
   eccentricity: number;
+  orbitalInclinationDeg?: number;
+  initialMeanAnomalyDeg?: number;
 
   material: Material;
   moons: Moon[];
+
+  // Optional planetary rings
+  rings?: PlanetaryRing[];
+}
+
+export interface PlanetMaterials {
+  mercuryMaterial: Material;
+  venusMaterial: Material;
+  earthMaterial: Material;
+  moonMaterial: Material;
+  marsMaterial: Material;
+
+  jupiterMaterial: Material;
+  saturnMaterial: Material;
+  uranusMaterial: Material;
+  neptuneMaterial: Material;
+  plutoMaterial: Material;
 }
 
 export interface Asteroid {
