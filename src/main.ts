@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
+import type { Moon, Planet } from './types'
 
 //---------------SCENE------------------
 const scene = new THREE.Scene()
@@ -35,8 +36,8 @@ const textureLoader = new THREE.TextureLoader()
 //-----------------TEXTURE---------------------
 const sunTexture = textureLoader.load('static/textures/2k_sun.jpg')
 const mercuryTexture = textureLoader.load('static/textures/2k_mercury.jpg')
-const venusTexture = textureLoader.load('static/textures/2k_venus.jpg')
-const earthTexture = textureLoader.load('static/textures/2k_earth.jpg')
+const venusTexture = textureLoader.load('static/textures/2k_venus_surface.jpg')
+const earthTexture = textureLoader.load('static/textures/2k_earth_daymap.jpg')
 const moonTexture = textureLoader.load('static/textures/2k_moon.jpg')
 const marsTexture = textureLoader.load('static/textures/2k_mars.jpg')
 
@@ -50,11 +51,7 @@ const moonMaterial = new THREE.MeshStandardMaterial({map: moonTexture})
 const marsMaterial = new THREE.MeshStandardMaterial({map: marsTexture})
 
 
-
-//----------------MESH---------------------
-const sun = new THREE.Mesh(sphereGeometry, sunMaterial)
-
-const planets = [
+const planets: Planet[] = [
   {
     name: "Mercury",
     radius: 0.5,
@@ -83,7 +80,7 @@ const planets = [
         radius: 0.36,
         distance: 2,
         speed: 0.02,
-        material: moonMaterial
+        // material: moonMaterial
       }
     ]
   },
@@ -113,14 +110,41 @@ const planets = [
 ]
 
 
-//----------------TRANSFORMATION-------------
+const sun = new THREE.Mesh(sphereGeometry, sunMaterial)
 sun.scale.setScalar(5)
-
-
-
-//----------------ADD TO SCENE-----------------
 // scene.add(new THREE.AxesHelper(10))
 scene.add(sun)
+
+const createPlanet = (planet: Planet) => {
+  const planetMesh = new THREE.Mesh(sphereGeometry, planet.material)
+  planetMesh.scale.setScalar(planet.radius)
+
+  planetMesh.position.x = planet.distance
+  return planetMesh
+}
+
+const createMoon = (moon: Moon) => {
+  const moonMesh = new THREE.Mesh(sphereGeometry, moonMaterial)
+  moonMesh.scale.setScalar(moon.radius)
+
+  moonMesh.position.x = moon.distance
+  return moonMesh
+}
+
+const planetMeshes = planets.map((planet) => {
+  const planetMesh = createPlanet(planet)
+  scene.add(planetMesh)
+
+  planet.moons.forEach((moon) => {
+    const moonMesh = createMoon(moon)
+    planetMesh.add(moonMesh)
+  })
+})
+
+//------------------------LIGHTS-------------------
+const ambieantLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambieantLight)
+
 
 
 //--------------TIMER----------------------
@@ -130,15 +154,15 @@ let elaspedTime = 0
 
 // ------------RENDER LOOP------------
 function renderloop(){
-  requestAnimationFrame(renderloop)
   
   delta = timer.update().getDelta()
   elaspedTime = timer.getElapsed()
-
+  
   //--------------ANIMATAION-------------
   
   
   renderer.render(scene, camera)
+  requestAnimationFrame(renderloop)
 }
 
 renderloop()
