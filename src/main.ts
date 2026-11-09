@@ -156,7 +156,7 @@ const plutoTexture = loadTexture('textures/2k_pluto.jpg');
 // ============================================
 
 cubeTextureLoader.setPath(
-  assetUrl('static/textures/cubeMap/')
+  assetUrl('textures/cubeMap/')
 );
 
 const backgroundCubemap = cubeTextureLoader.load(
