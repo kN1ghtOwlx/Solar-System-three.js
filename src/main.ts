@@ -5,8 +5,8 @@ import { OrbitControls } from 'three/examples/jsm/Addons.js'
 const scene = new THREE.Scene()
 
 //---------------CAMERA------------------
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.z = 20
+const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000)
+camera.position.z = 50
 // scene.add(camera)
 
 //---------------CANVAS------------------
@@ -50,21 +50,31 @@ moon.position.x = 2
 
 
 //----------------ADD TO SCENE-----------------
-// scene.add(new THREE.AxesHelper(6))
+// scene.add(new THREE.AxesHelper(10))
 scene.add(sun)
 scene.add(earth)
 earth.add(moon)
 
-
+//--------------TIMER----------------------
 const timer = new THREE.Timer()
 let delta = 0
+let elaspedTime = 0
 
-function animate(){
-  requestAnimationFrame(animate)
-  
+// ------------RENDER LOOP------------
+function renderloop(){
   delta = timer.update().getDelta()
+  elaspedTime = timer.getElapsed()
 
+  //--------------ANIMATAION-------------
+  earth.rotation.y += delta
+  earth.position.x = Math.sin(elaspedTime) * 10
+  earth.position.z = Math.cos(elaspedTime) * 10
+
+  moon.position.x = Math.sin(elaspedTime) * 2
+  moon.position.z = Math.cos(elaspedTime) * 2
+  
   renderer.render(scene, camera)
+  requestAnimationFrame(renderloop)
 }
 
-animate()
+renderloop()
