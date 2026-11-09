@@ -22,38 +22,106 @@ window.addEventListener('resize', () => {
 
 const orbitControls = new OrbitControls(camera, canvas)
 orbitControls.enableDamping = true
-// orbitControls.autoRotate = true
+orbitControls.autoRotate = true
+orbitControls.enablePan = false
 
 //---------------GEOMETRY------------------
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32)
 
 
+//-----------------TEXTURE LOADER----------------------
+const textureLoader = new THREE.TextureLoader()
+
+//-----------------TEXTURE---------------------
+const sunTexture = textureLoader.load('static/textures/2k_sun.jpg')
+const mercuryTexture = textureLoader.load('static/textures/2k_mercury.jpg')
+const venusTexture = textureLoader.load('static/textures/2k_venus.jpg')
+const earthTexture = textureLoader.load('static/textures/2k_earth.jpg')
+const moonTexture = textureLoader.load('static/textures/2k_moon.jpg')
+const marsTexture = textureLoader.load('static/textures/2k_mars.jpg')
+
+
 //----------------MATERIAL------------------
-const sunMaterial = new THREE.MeshBasicMaterial({color: 0xfff700})
-const earthMaterial = new THREE.MeshBasicMaterial({color: 'blue'})
-const moonMaterial = new THREE.MeshBasicMaterial({color: 'grey'})
+const sunMaterial = new THREE.MeshBasicMaterial({map: sunTexture})
+const mercuryMaterial = new THREE.MeshStandardMaterial({map: mercuryTexture})
+const venusMaterial = new THREE.MeshStandardMaterial({map: venusTexture})
+const earthMaterial = new THREE.MeshStandardMaterial({map: earthTexture})
+const moonMaterial = new THREE.MeshStandardMaterial({map: moonTexture})
+const marsMaterial = new THREE.MeshStandardMaterial({map: marsTexture})
+
 
 
 //----------------MESH---------------------
 const sun = new THREE.Mesh(sphereGeometry, sunMaterial)
-const earth = new THREE.Mesh(sphereGeometry, earthMaterial)
-const moon = new THREE.Mesh(sphereGeometry, moonMaterial)
+
+const planets = [
+  {
+    name: "Mercury",
+    radius: 0.5,
+    distance: 10,
+    speed: 0.01,
+    material: mercuryMaterial,
+    moons: []
+  },
+  {
+    name: "Venus",
+    radius: 1.21,
+    distance: 15,
+    speed: 0.007,
+    material: venusMaterial,
+    moons: []
+  },
+  {
+    name: "Earth",
+    radius: 1.32,
+    distance: 20,
+    speed: 0.006,
+    material: earthMaterial,
+    moons: [
+      {
+        name: "Moon",
+        radius: 0.36,
+        distance: 2,
+        speed: 0.02,
+        material: moonMaterial
+      }
+    ]
+  },
+  {
+    name: "Mars",
+    radius: 0.7,
+    distance: 26,
+    speed: 0.005,
+    material: marsMaterial,
+    moons: [
+      {
+        name: "Phobos",
+        radius: 0.12,
+        distance: 1.2,
+        speed: 0.025,
+        // material: phobosMaterial
+      },
+      {
+        name: "Deimos",
+        radius: 0.09,
+        distance: 1.8,
+        speed: 0.015,
+        // material: deimosMaterial
+      }
+    ]
+  }
+]
 
 
 //----------------TRANSFORMATION-------------
 sun.scale.setScalar(5)
 
-earth.position.x = 10
-
-moon.scale.setScalar(0.2)
-moon.position.x = 2
 
 
 //----------------ADD TO SCENE-----------------
 // scene.add(new THREE.AxesHelper(10))
 scene.add(sun)
-scene.add(earth)
-earth.add(moon)
+
 
 //--------------TIMER----------------------
 const timer = new THREE.Timer()
@@ -62,19 +130,15 @@ let elaspedTime = 0
 
 // ------------RENDER LOOP------------
 function renderloop(){
+  requestAnimationFrame(renderloop)
+  
   delta = timer.update().getDelta()
   elaspedTime = timer.getElapsed()
 
   //--------------ANIMATAION-------------
-  earth.rotation.y += delta
-  earth.position.x = Math.sin(elaspedTime) * 10
-  earth.position.z = Math.cos(elaspedTime) * 10
-
-  moon.position.x = Math.sin(elaspedTime) * 2
-  moon.position.z = Math.cos(elaspedTime) * 2
+  
   
   renderer.render(scene, camera)
-  requestAnimationFrame(renderloop)
 }
 
 renderloop()
