@@ -24,7 +24,7 @@ window.addEventListener('resize', () => {
 const orbitControls = new OrbitControls(camera, canvas)
 orbitControls.enableDamping = true
 orbitControls.autoRotate = true
-orbitControls.enablePan = false
+// orbitControls.enablePan = false
 
 //---------------GEOMETRY------------------
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32)
@@ -135,15 +135,17 @@ const planetMeshes = planets.map((planet) => {
   const planetMesh = createPlanet(planet)
   scene.add(planetMesh)
 
-  planet.moons.forEach((moon) => {
+  planet.moons.forEach((moon: Moon) => {
     const moonMesh = createMoon(moon)
     planetMesh.add(moonMesh)
   })
+
+  return planetMesh
 })
 
 //------------------------LIGHTS-------------------
-const ambieantLight = new THREE.AmbientLight(0xffffff, 0.5)
-scene.add(ambieantLight)
+// const ambieantLight = new THREE.AmbientLight(0xffffff, 0.5)
+// scene.add(ambieantLight)
 
 
 
@@ -159,7 +161,17 @@ function renderloop(){
   elaspedTime = timer.getElapsed()
   
   //--------------ANIMATAION-------------
-  
+  planetMeshes.forEach((planet, planetIndex) => {
+    planet.rotation.y += delta * planets[planetIndex].speed * 100
+    planet.position.x = Math.sin(planet.rotation.y) * planets[planetIndex].distance
+    planet.position.z = Math.cos(planet.rotation.y) * planets[planetIndex].distance
+
+    planet.children.forEach((moon, moonIndex) => {
+      moon.rotation.y += delta * planets[planetIndex].moons[moonIndex].speed * 100
+      moon.position.x = Math.sin(moon.rotation.y) * planets[planetIndex].moons[moonIndex].distance
+      moon.position.z = Math.cos(moon.rotation.y) * planets[planetIndex].moons[moonIndex].distance
+    })
+  })
   
   renderer.render(scene, camera)
   requestAnimationFrame(renderloop)
