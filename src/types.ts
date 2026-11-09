@@ -1,19 +1,27 @@
-import type * as THREE from 'three';
+
+import type { Material } from 'three';
 
 export interface Moon {
   name: string;
   radius: number;
   distance: number;
-  speed: number;
-  material: THREE.Material;
+  orbitalPeriodDays: number;
+  material: Material;
 }
 
 export interface Planet {
   name: string;
   radius: number;
   distance: number;
-  speed: number;
-  rotationSpeed: number;
-  material: THREE.Material;
+
+  // Orbital and rotation periods in Earth days
+  orbitalPeriodDays: number;
+  rotationPeriodDays: number;
+
+  // Planetary axis and orbital shape
+  axialTiltDeg: number;
+  eccentricity: number;
+
+  material: Material;
   moons: Moon[];
 }
