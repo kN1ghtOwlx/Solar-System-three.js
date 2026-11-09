@@ -41,7 +41,7 @@ scene.add(new THREE.AxesHelper(6))
 scene.add(cubeMesh)
 
 // cubeMesh.rotation.y = Math.PI * 0.25
-cubeMesh.rotation.y = THREE.MathUtils.degToRad(45)
+// cubeMesh.rotation.y = THREE.MathUtils.degToRad(45)
 
 const timer = new THREE.Timer()
 let delta = 0
@@ -50,8 +50,10 @@ function animate(){
   requestAnimationFrame(animate)
 
   delta = timer.update().getDelta()
+
+  // cubeMesh.rotation.y += delta
   
-  orbitControls.update(delta*5)
+  // orbitControls.update(delta*5)
 
   renderer.render(scene, camera)
 }
